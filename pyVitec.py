@@ -4,6 +4,7 @@ import os
 import urllib2
 
 _name = "vitec"
+_file = os.path.dirname(os.path.abspath(__file__)) + '/assest/url.txt'
 
 def mkdir(_name):
 	if os.path.exists(_name) == False:
@@ -22,13 +23,13 @@ def get_redirected_url(url):
     return request.url
 	
 
-f = open(os.path.dirname(os.path.abspath(__file__)) + '/assest/url.txt', 'r')
+f = open(_file, 'r')
 
 num_lines = sum(1 for line in f)
 f.close()
 
-# fucking async
-f = open(os.path.dirname(os.path.abspath(__file__)) + '/assest/url.txt', 'r')
+# fucking, overcome data
+f = open(_file, 'r')
 
 mkdir(_name)
 
@@ -39,4 +40,5 @@ for line in f:
 	download(get_redirected_url(line), line.strip().split('/')[len(line.split('/')) - 1])
 	bar.next()
 bar.finish()
+f.close()
 print 'Download complete!'
