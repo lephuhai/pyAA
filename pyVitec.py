@@ -1,27 +1,9 @@
 from progress.bar import Bar
-import urllib
+from _utils import *
 import os
-import urllib2
 
 _name = "vitec"
-_file = os.path.dirname(os.path.abspath(__file__)) + '/assest/url.txt'
-
-def mkdir(_name):
-	if os.path.exists(_name) == False:
-		os.mkdir(_name)
-		print "\nThe directory was created successfully."
-
-def download(path, fileName):
-	fileSave = os.path.join(_name, fileName)
-	d = urllib.URLopener()
-	d.retrieve(path, fileSave)
-	
-
-def get_redirected_url(url):
-    opener = urllib2.build_opener(urllib2.HTTPRedirectHandler)
-    request = opener.open(url)
-    return request.url
-	
+_file = os.path.dirname(os.path.abspath(__file__)) + '/assest/url.txt'	
 
 f = open(_file, 'r')
 
@@ -31,13 +13,14 @@ f.close()
 # fucking, overcome data
 f = open(_file, 'r')
 
-mkdir(_name)
+_fs.mkdir(_name)
 
 bar = Bar('Processing', max = num_lines)
 for line in f:
+	pathSave = os.path.join(_name, line.strip().split('/')[len(line.split('/')) - 1])
 	# line is url content, but url redirect google site
 	# HTTP Response 301
-	download(get_redirected_url(line), line.strip().split('/')[len(line.split('/')) - 1])
+	_http.download(_http.get_redirected_url(line), pathSave)
 	bar.next()
 bar.finish()
 f.close()
