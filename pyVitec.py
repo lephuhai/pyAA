@@ -24,4 +24,4 @@ for line in f:
 	bar.next()
 bar.finish()
 f.close()
-print 'Download complete! '
+print 'Download complete!'
